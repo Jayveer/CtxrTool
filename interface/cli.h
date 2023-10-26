@@ -1,10 +1,19 @@
 #pragma once
+#include "../tga/tga.h"
 #include "../dds/dds.h"
 #include "../ctxr/ctxr.h"
 #include "../util/fileutil.h"
 
+typedef enum CLI_FILETYPE
+{
+	CTXR_FILE,
+	DDS_FILE,
+	TGA_FILE
+} CLI_FILETYPE;
+
 class CLI 
 {
+
 	public:
 		CLI(int argc, char** argv);
 		~CLI();
@@ -20,6 +29,9 @@ class CLI
 		const char* USAGE_MESSAGE = "USAGE:\t	Convert CTXR to DDS\n \
 	\tCtxrTool.exe <example_file.ctxr>\n \
 	\n \
+	\tConvert CTXR to TGA\n \
+	\tCtxrTool.exe <example_file.ctxr> tga\n \
+	\n \
 	\tConvert DDS to CTXR\n \
 	\tCtxrTool.exe <example_file.dds>\n";
 
@@ -30,4 +42,10 @@ class CLI
 
 		void convertDDS();
 		void convertCTXR();
+
+		void setInputType();
+		void setOutputType();
+
+		CLI_FILETYPE inputType  = CTXR_FILE;
+		CLI_FILETYPE outputType = DDS_FILE;
 };

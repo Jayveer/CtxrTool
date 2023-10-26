@@ -4,5 +4,5 @@
 int main(int argc, char** argv)
 {
 	CLI cli = CLI(argc, argv);
-	cli.run("CtxrTool", "1.1");
+	cli.run("CtxrTool", "1.2");
 }

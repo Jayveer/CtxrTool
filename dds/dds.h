@@ -1,5 +1,4 @@
 #pragma once
-#include <cstdint>
 #include "../util/fileutil.h"
 
 typedef enum _DDS_FLAGS
@@ -61,14 +60,6 @@ typedef struct _DDS_HEADER
 	uint32_t caps4;
 	uint32_t reserved2;
 } DDS_HEADER;
-
-/*
-typedef struct _DDS
-{
-	DDS_HEADER header;
-	uint8_t *data;
-} DDS;
-*/
 
 class DDS
 {

@@ -134,6 +134,7 @@
     <ClInclude Include="ctxr\ctxr.h" />
     <ClInclude Include="dds\dds.h" />
     <ClInclude Include="interface\cli.h" />
+    <ClInclude Include="tga\tga.h" />
     <ClInclude Include="util\fileutil.h" />
   </ItemGroup>
   <ItemGroup>
@@ -141,6 +142,7 @@
     <ClCompile Include="dds\dds.cpp" />
     <ClCompile Include="interface\cli.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="tga\tga.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

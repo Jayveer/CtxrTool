@@ -83,6 +83,17 @@ int32_t CTXR::getSize()
 	return size;
 }
 
+int32_t CTXR::getMainTextureSize()
+{
+	int width  = _byteswap_ushort(header->width);
+	int height = _byteswap_ushort(header->height);
+
+	int a = std::max(1, (width +  3) / 4);
+	int b = std::max(1, (height + 3) / 4);
+
+	return a * b * 64;
+}
+
 void CTXR::save(const char* filename)
 {
 	std::string output = "";
@@ -90,12 +101,53 @@ void CTXR::save(const char* filename)
 	writeDataToFile(data, size - 0x80, filename, output, true);
 }
 
-int getChunkSize(int width, int height)
+bool CTXR::addParams(const char* filename)
 {
-	int a = std::max(1, (width  + 3) / 4 );
-	int b = std::max(1, (height + 3) / 4 );
+	int i;
+	uint8_t* param;
+	std::string str;
+	std::ifstream file(filename);
 
-	return a * b * 64;
+	if (!file) return false;
+
+	param = &header->field_14;
+	std::regex r("\\s+");
+
+	i = 0;
+	while (std::getline(file, str) || i < MAX_PARAM)
+	{
+		str = std::regex_replace(str, r, "");
+		
+		std::regex re(MATCH_PARAM);
+		std::smatch match;
+
+		if (std::regex_search(str, match, re))
+		{
+			int x = std::stoi(match[2]);
+			param[i++] = std::clamp(x, 0, 255);
+		}
+	}
+
+	file.close();
+	return true;
+}
+
+void CTXR::saveParams(const char* filename)
+{
+	uint8_t *param;
+	std::ofstream paramFile;
+	paramFile.open(filename);
+
+	param = &header->field_14;
+
+
+	for (int i = 0; i < MAX_PARAM; i++)
+	{
+		int val = param[i];
+		paramFile << "Param_" << i << " = " << std::clamp(val, 0, 255) << "\n";
+	}
+
+	paramFile.close();
 }
 
 //needed when dds data omits chunk size
@@ -108,7 +160,7 @@ void CTXR::saveExtend(const char* filename)
 	uint32_t chunkSize;
 	std::string output = "";
 
-	chunkSize = getChunkSize(_byteswap_ushort(header->width), _byteswap_ushort(header->height));
+	chunkSize = getMainTextureSize();
 	writeDataToFile((uint8_t*)header, 0x80, filename, output);
 
 	dataPtr = 0x4;

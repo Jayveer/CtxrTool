@@ -1,7 +1,10 @@
 #pragma once
-#include <cstdint>
 #include <algorithm>
+#include <regex>
 #include "../util/fileutil.h"
+
+#define MAX_PARAM 13
+#define MATCH_PARAM "(.*)=(.*)"
 
 typedef struct _CTXR_HEADER
 {
@@ -36,13 +39,7 @@ typedef struct _CTXR_HEADER
 	uint8_t  field_28;
 	uint32_t padding[21];
 } CTXR_HEADER;
-/*
-typedef struct _CTXR
-{
-	CTXR_HEADER header;
-	uint8_t *data;
-} CTXR;
-*/
+
 
 class CTXR
 {
@@ -53,16 +50,21 @@ class CTXR
 		void open(const char* filename);
 		void save(const char* filename);
 		void saveExtend(const char* filename);
+		bool addParams(const char* filename);
+		void saveParams(const char* filename);
 		void create(uint32_t width, uint32_t height, uint32_t n_mipmaps, uint8_t* data, int32_t dataSize);
 
-		int32_t getSize();
-		uint8_t* getData();
+		int32_t  getSize();
+		uint8_t *getData();
 		uint32_t getWidth();
 		uint32_t getHeight();
 		uint32_t getNMipMaps();
+		int32_t  getMainTextureSize();
+		int64_t  getBlockSize(int32_t idx);
 	private:
 		int32_t		 size;
 		void		*file;
 		uint8_t		*data;
 		CTXR_HEADER *header;
+
 };

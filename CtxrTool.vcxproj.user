@@ -4,11 +4,11 @@
     <ShowAllFiles>true</ShowAllFiles>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LocalDebuggerCommandArguments>sna_face_halo_def.bmp.dds</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>sna_face_def_org.bmp.dds</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LocalDebuggerCommandArguments>sna_face_halo_def.bmp.dds</LocalDebuggerCommandArguments>
+    <LocalDebuggerCommandArguments>sna_face_def_org.bmp.dds</LocalDebuggerCommandArguments>
     <DebuggerFlavor>WindowsLocalDebugger</DebuggerFlavor>
   </PropertyGroup>
 </Project>
