@@ -1,5 +1,6 @@
 #include "ctxr.h"
 
+
 CTXR::CTXR()
 {
 
@@ -34,6 +35,21 @@ void CTXR::create(uint32_t width, uint32_t height, uint32_t n_mipmaps, uint8_t *
 	header->height   = _byteswap_ushort(header->height);
 	header->field_0C = _byteswap_ushort(1);
 	header->field_12 = _byteswap_ushort(0x100);
+
+	//these are unknown, may be params that indiciate colour
+	header->field_14 = 0;
+	header->field_15 = 0;
+	header->field_16 = 0;
+	header->field_17 = 255;
+	header->field_18 = 255;
+	header->field_19 = 255;
+	header->field_1A = 255;
+	header->field_1B = 255;
+	header->field_1C = 255;
+	header->field_1D = 255;
+	header->field_1E = 255;
+	header->field_1F = 255;
+	header->field_20 = 255;
 
 	header->n_mipmaps = n_mipmaps;
 
@@ -74,6 +90,14 @@ void CTXR::save(const char* filename)
 	writeDataToFile(data, size - 0x80, filename, output, true);
 }
 
+int getChunkSize(int width, int height)
+{
+	int a = std::max(1, (width  + 3) / 4 );
+	int b = std::max(1, (height + 3) / 4 );
+
+	return a * b * 64;
+}
+
 //needed when dds data omits chunk size
 void CTXR::saveExtend(const char* filename)
 {
@@ -84,26 +108,14 @@ void CTXR::saveExtend(const char* filename)
 	uint32_t chunkSize;
 	std::string output = "";
 
+	chunkSize = getChunkSize(_byteswap_ushort(header->width), _byteswap_ushort(header->height));
 	writeDataToFile((uint8_t*)header, 0x80, filename, output);
+
+	dataPtr = 0x4;
 	filePtr = 0x80;
-	
-	chunkSize = *(uint32_t*)data;
-	chunkSize = _byteswap_ulong(chunkSize);
-	writeDataToFile(data, chunkSize + 4, filename, output, true);
-	dataPtr = chunkSize + 4;
-	filePtr += dataPtr;
 
-	align = getAlignment(filePtr, 0x20);
-
-	zero = new uint8_t[align];
-	memset(zero, 0, align);
-	writeDataToFile(zero, align, filename, output, true);
-	delete[] zero;
-	filePtr += align;
-
-	for (int i = 0; i < header->n_mipmaps - 1; i++)
+	for (int i = 0; i < header->n_mipmaps; i++)
 	{
-		chunkSize /= 4;
 		chunkSize = _byteswap_ulong(chunkSize);
 		writeDataToFile((uint8_t*)&chunkSize, 4, filename, output, true);
 		chunkSize = _byteswap_ulong(chunkSize);
@@ -117,8 +129,8 @@ void CTXR::saveExtend(const char* filename)
 		memset(zero, 0, align);
 		writeDataToFile(zero, align, filename, output, true);
 		delete[] zero;
-		filePtr += align;
-	}
 
-	int x = 0;
+		filePtr += align;
+		chunkSize /= 4;
+	}
 }

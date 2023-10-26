@@ -1,5 +1,6 @@
 #pragma once
 #include <cstdint>
+#include <algorithm>
 #include "../util/fileutil.h"
 
 typedef struct _CTXR_HEADER
@@ -12,7 +13,10 @@ typedef struct _CTXR_HEADER
 	uint16_t field_0E;
 	uint16_t field_10;
 	uint16_t field_12;
-	uint32_t field_14;
+	uint8_t  field_14;
+	uint8_t  field_15;
+	uint8_t  field_16;
+	uint8_t  field_17;
 	uint8_t  field_18;
 	uint8_t  field_19;
 	uint8_t  field_1A;
