@@ -4,9 +4,12 @@
 
 CtxrTool is a free open source tool to convert CTXR textures from Metal Gear Solid: Master Collection to DDS. It is also possible to convert DDS textures to CTXR but as there are still some unknown's it is a work in progress.
 
+DDS files must be saved in the 8.8.8.8 ARGB format, I have only tested using the NVIDIA Texture Tools Exporter plugin and Photoshop.
+
 ### Latest Changes
  - Added support for extracting as TGA file
  - Addded param extraction
+
 
 ### To Do
  - Find out purpose of unknown bytes for DDS to CTXR conversion.
