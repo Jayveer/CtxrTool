@@ -63,11 +63,11 @@ void CLI::processArgs()
 {
 	std::string ext = getExtension(argv[1]);
 
-	if (ext == ".dds")
+	if (ext == ".dds" || ext == ".DDS")
 	{
 		convertDDS();
 	}
-	else if (ext == ".ctxr")
+	else if (ext == ".ctxr" || ext == ".CTXR")
 	{
 		convertCTXR();
 	}
@@ -103,11 +103,11 @@ void CLI::setInputType()
 {
 	std::string ext = getExtension(argv[1]);
 
-	if (ext == ".dds")
+	if (ext == ".dds" || ext == ".DDS")
 	{
 		inputType = DDS_FILE;
 	}
-	else if (ext == ".ctxr")
+	else if (ext == ".ctxr" || ext == ".CTXR")
 	{
 		inputType = CTXR_FILE;
 	}
