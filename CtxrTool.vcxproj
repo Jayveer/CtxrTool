@@ -131,18 +131,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="ctxr\ctxr.h" />
-    <ClInclude Include="dds\dds.h" />
+    <ClInclude Include="image\bmp\bmp.h" />
+    <ClInclude Include="image\ctxr\ctxr.h" />
+    <ClInclude Include="image\dds\dds.h" />
     <ClInclude Include="interface\cli.h" />
-    <ClInclude Include="tga\tga.h" />
+    <ClInclude Include="image\tga\tga.h" />
     <ClInclude Include="util\fileutil.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ctxr\ctxr.cpp" />
-    <ClCompile Include="dds\dds.cpp" />
+    <ClCompile Include="image\bmp\bmp.cpp" />
+    <ClCompile Include="image\ctxr\ctxr.cpp" />
+    <ClCompile Include="image\dds\dds.cpp" />
     <ClCompile Include="interface\cli.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="tga\tga.cpp" />
+    <ClCompile Include="image\tga\tga.cpp" />
+    <ClCompile Include="util\imageutil.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />

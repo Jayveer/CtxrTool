@@ -1,5 +1,6 @@
 #pragma once
-#include "../util/fileutil.h"
+#include "../../util/fileutil.h"
+
 
 typedef enum _DDS_FLAGS
 {
@@ -13,6 +14,13 @@ typedef enum _DDS_FLAGS
 	DDSD_DEPTH		 = 0x800000,
 } DDS_FLAGS;
 
+typedef enum _DDS_CAPS
+{
+	DDSCAPS_COMPLEX = 0x8,
+	DDSCAPS_MIPMAP = 0x400000,
+	DDSCAPS_TEXTURE = 0x1000,
+} DDS_CAPS;
+
 typedef enum _DDS_PIXELFORMAT_FLAGS
 {
 	DDPF_ALPHAPIXELS = 0x1,
@@ -23,6 +31,7 @@ typedef enum _DDS_PIXELFORMAT_FLAGS
 	DDPF_LUMINANCE   = 0x20000
 } DDS_PIXELFORMAT_FLAGS;
 
+#pragma pack(push, 1)
 typedef struct _DDS_PIXELFORMAT
 {
 	uint32_t pxlFmtSize = 0x20;
@@ -35,12 +44,7 @@ typedef struct _DDS_PIXELFORMAT
 	uint32_t aBitmask = 0;
 } DDS_PIXELFORMAT;
 
-typedef enum _DDS_CAPS
-{
-	DDSCAPS_COMPLEX = 0x8,
-	DDSCAPS_MIPMAP  = 0x400000,
-	DDSCAPS_TEXTURE = 0x1000,
-} DDS_CAPS;
+
 
 typedef struct _DDS_HEADER
 {
@@ -60,6 +64,7 @@ typedef struct _DDS_HEADER
 	uint32_t caps4;
 	uint32_t reserved2;
 } DDS_HEADER;
+#pragma pack(pop)
 
 class DDS
 {
