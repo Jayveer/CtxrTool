@@ -83,6 +83,35 @@ void writeDataToFile(uint8_t* data, int size, const std::string& filename, std::
 }
 
 inline
+void overwriteDataInFile(uint8_t* data, int size, const std::string& filename, std::string& output) {
+	if (!std::filesystem::exists(output) && output != "")
+		std::filesystem::create_directories(output);
+
+	std::ofstream ofs;
+	updateDir(filename, output);
+	ofs.open(output, std::ofstream::in | std::ofstream::binary);
+
+	ofs.write((char*)data, size);
+	ofs.close();
+	resetDir(output);
+}
+
+inline
+int32_t writeAlignment(const std::string& filename, std::string& output, uint32_t pos, int64_t alignSize) {
+	uint8_t* zero;
+	uint32_t align;
+
+	align = getAlignment(pos, alignSize);
+	zero = new uint8_t[align];
+	memset(zero, 0, align);
+	writeDataToFile(zero, align, filename, output, true);
+	delete[] zero;
+
+	return align;
+}
+
+
+inline
 void writeZeroesToFile(int size, const std::string& filename, std::string& output) {
 	if (!std::filesystem::exists(output) && output != "")
 		std::filesystem::create_directories(output);

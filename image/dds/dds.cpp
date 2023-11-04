@@ -71,10 +71,33 @@ int32_t DDS::getSize()
 	return size;
 }
 
-
+/*
 void DDS::save(const char* filename)
 {
 	std::string output = "";
 	writeDataToFile((uint8_t*)header, 0x80, filename, output);
 	writeDataToFile(data, size - 0x80, filename, output, true);
+}
+*/
+
+void DDS::save(const char* filename)
+{
+	int64_t dataPtr = 0;
+	std::string output = "";
+	writeDataToFile((uint8_t*)header, 0x80, filename, output);
+
+
+	for (int i = 0; i < header->n_mipmaps; i++)
+	{
+		int64_t align;
+		uint32_t chunkSize = *(uint32_t*)&data[dataPtr];
+		chunkSize = _byteswap_ulong(chunkSize);
+		dataPtr += 4;
+
+		writeDataToFile(&data[dataPtr], chunkSize, filename, output, true);
+		dataPtr += chunkSize;
+
+		align = getAlignment(dataPtr, 0x20);
+		dataPtr += align;
+	}
 }
